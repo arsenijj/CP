@@ -1,7 +1,6 @@
 import random
 
 
-
 def representation(p):
 
     twos = 0
@@ -65,7 +64,7 @@ def main():
         p = get_prime(l)
     print("Открытый параметр p:", p)
 
-    # Генерация Открытый параметр q
+    # Генерация Открытый параметр g
     while True:
         g = random.randint(0, p)
         if pow(g, p - 1, p) % p == 1 and miller_rabin_test(g, 8):
@@ -74,11 +73,11 @@ def main():
 
 
     # Генерация: случайное натуральное число a — закрытый ключ Алисы
-    a = random.randint(0, p)
+    a = random.randint(1, p - 1)
     print("Закрытый ключ a:", a)
 
     # Генерация: случайное натуральное число b — закрытый ключ Боба
-    b = random.randint(0, p)
+    b = random.randint(1, p - 1)
     print("Закрытый ключ b:", b)
 
     #Вычисляется открытый ключ Алисы, передается Бобу
@@ -96,8 +95,10 @@ def main():
     K_bob = pow(Alice, b, p)
     print("Вычисляется общий секретный ключ K на стороне Боба: ", K_bob)
 
-    print(K_alice == K_bob)
-
+    if K_alice == K_bob:
+        print('Получение общего секретного ключа выполнено успешно')
+    else:
+        print('Общий секретный ключ не найден')
 
 if __name__ == "__main__":
     main()
